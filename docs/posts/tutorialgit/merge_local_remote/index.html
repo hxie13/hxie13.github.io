@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="zh" dir="ltr">
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Merge_local_remote &middot; </title>
+  <meta name="description" content="" />
+  <link href="hxie13.github.io/hxie13.github.io/css/katex.css" rel="stylesheet">
+  
+  
+  
+  
+  <link href="hxie13.github.io/hxie13.github.io/css/concated.min.css" rel="stylesheet">
+  
+  <style>
+    body {
+      background: #ecedef url("/hxie13.github.io/img/ignasi_pattern_s.png") repeat;
+    }
+  </style>
+</head>
+
+  <body class="single-body">
+    <nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="hxie13.github.io" class="nav-text">KSKC</a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="hxie13.github.io" class="hamburger-menu-overlay-link">Home</a></li>
+      
+      
+    </ul>
+  </div>
+</nav>
+
+    <main class="content side-text-padding">
+      <article class="post dropcase">
+        <header class="post-header">
+          <h1 class="post-title">Merge_local_remote</h1>
+          <p class="post-date">Posted <time datetime="2021-06-19">Jun 19, 2021</time></p>
+        </header>
+        
+        
+        <h2 id="问题背景">问题背景</h2>
+<ul>
+<li>当Github上的仓库与本地仓库不同步，存在差异时，在本地向remote执行push操作会出现差错，这是本地与remote仓库历史记录不同产生的问题.</li>
+</ul>
+<h2 id="问题复现">问题复现</h2>
+<pre><code>git remote add origin git@github.com:username/repostotyname.git
+git remote -v
+# 拉取remote的master分支至本地
+git pull origin master
+# 产生&quot;拒绝合并不相关的历史&quot;
+</code></pre><h2 id="解决方案">解决方案</h2>
+<ul>
+<li>采取强制方式拉取合并，<code>git pull origin master --allow-unrelated-histories</code>，仓库便在本地合并，可进一步推送至remote，<code>git push -u origin master</code></li>
+</ul>
+
+      </article>
+      
+    </main>
+    <nav class="end-nav side-padding">
+      
+      <a ontouchstart="cardPressed.call(this)" ontouchend="cardReleased.call(this)" ontouchmove="cardReleased.call(this)" 
+  href="hxie13.github.io/posts/tricks/tutorialhugo/" class="card blog-card bc-next" rel="bookmark" >
+  
+  <article class="card-body">
+    <h2 class="card-title">Hugo&#43;Github静态网页部署</h2>
+    <p class="card-text"></p>
+    <div class="card-subtext muted-text">
+      <p>Posted <time datetime="2021-06-19 619:00">Jun 19, 2021</time></p>
+      <p></p>
+    </div>
+  </article>
+</a>
+      
+    </nav>
+    <footer class="side-padding" style="background-image: url('hxie13.github.io/img/home-blob-flip.svg');">
+    <a href="hxie13.github.io" class="footer-link">
+    
+        <img class="footer-icon" src="hxie13.github.io/hxie13.github.io/icons/home-page.png">
+    
+    </a>
+    
+    <a href="https://github.com/hxie13/" class="footer-link">
+    
+        <img class="footer-icon" src="hxie13.github.io/hxie13.github.io/icons/github.png" />
+    
+    </a>
+    
+    
+</footer>
+    
+  <script defer src="hxie13.github.io/hxie13.github.io/js/katex.js"></script>
+
+
+  <script defer src="hxie13.github.io/hxie13.github.io/js/auto-render.js" onload="renderMathInElement(document.body);"></script>
+
+
+<script src="hxie13.github.io/hxie13.github.io/js/core.min.js"></script>
+
+  </body>
+</html>

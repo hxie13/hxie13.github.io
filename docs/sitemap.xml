@@ -2,10 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>hxie13.github.io/posts/tricks/tutorialhugo/</loc>
-    <lastmod>2021-06-19T10:45:00+08:00</lastmod>
+    <loc>hxie13.github.io/posts/tutorialgit/merge_local_remote/</loc>
+    <lastmod>2021-06-19T21:54:09+08:00</lastmod>
   </url><url>
     <loc>hxie13.github.io/posts/</loc>
+    <lastmod>2021-06-19T21:54:09+08:00</lastmod>
+  </url><url>
+    <loc>hxie13.github.io/posts/tricks/tutorialhugo/</loc>
     <lastmod>2021-06-19T10:45:00+08:00</lastmod>
   </url><url>
     <loc>hxie13.github.io/posts/leetcode/</loc>

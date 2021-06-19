@@ -5,11 +5,18 @@
     <description>Recent content in Posts on </description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh</language>
-    <lastBuildDate>Sat, 19 Jun 2021 10:45:00 +0800</lastBuildDate>
+    <lastBuildDate>Sat, 19 Jun 2021 21:54:09 +0800</lastBuildDate>
     
         <atom:link href="hxie13.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
+      <title>Merge_local_remote</title>
+      <link>hxie13.github.io/posts/tutorialgit/merge_local_remote/</link>
+      <pubDate>Sat, 19 Jun 2021 21:54:09 +0800</pubDate>
+      
+      <guid>hxie13.github.io/posts/tutorialgit/merge_local_remote/</guid>
+      <description></description>
+    </item><item>
       <title>Hugo&#43;Github静态网页部署</title>
       <link>hxie13.github.io/posts/tricks/tutorialhugo/</link>
       <pubDate>Sat, 19 Jun 2021 10:45:00 +0800</pubDate>
