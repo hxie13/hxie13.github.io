@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="zh" dir="ltr">
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Hugo&#43;Github静态网页部署 &middot; </title>
+  <meta name="description" content="" />
+  <link href="hxie13.github.io/hxie13.github.io/css/katex.css" rel="stylesheet">
+  
+  
+  
+  
+  <link href="hxie13.github.io/hxie13.github.io/css/concated.min.css" rel="stylesheet">
+  
+  <style>
+    body {
+      background: #ecedef url("/hxie13.github.io/img/ignasi_pattern_s.png") repeat;
+    }
+  </style>
+</head>
+
+  <body class="single-body">
+    <nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="hxie13.github.io" class="nav-text">KSKC</a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="hxie13.github.io" class="hamburger-menu-overlay-link">Home</a></li>
+      
+      
+    </ul>
+  </div>
+</nav>
+
+    <main class="content side-text-padding">
+      <article class="post ">
+        <header class="post-header">
+          <h1 class="post-title">Hugo&#43;Github静态网页部署</h1>
+          <p class="post-date">Posted <time datetime="2021-06-19">Jun 19, 2021</time></p>
+        </header>
+        
+        
+        <h1 id="build-new-site-with-github">Build new site with github</h1>
+<ol>
+<li>构建本地静态网页</li>
+</ol>
+<pre><code># 新建site
+hugo new site newSite
+# 进入newSite
+cd newSite
+
+# 新建blog，并添加内容
+hugo new posts/newPost_1/hello.md
+# 本地预览网页效果
+hugo server -D
+# 本地生成静态网页，内容存储在/public中
+hugo
+
+</code></pre><ol start="2">
+<li>创建Github仓库，利用<a href="https://pages.github.com/">Github Pages</a>进行网页部署</li>
+</ol>
+<ul>
+<li>在Github中新建个人仓库<code>username.github.io</code></li>
+<li>在本地/public文件夹中，将内容push至远程仓库</li>
+</ul>
+<pre><code>cd public
+git init
+git add .
+git commit -m &quot;hello Hugo&quot;
+git remote add origin https://github.com/username/username.github.io.git
+git push -u origin master
+</code></pre><ol start="3">
+<li>打开网页<code>https://username.github.io/</code>便可对部署网页进行访问了，快向小伙伴安利一下吧</li>
+</ol>
+
+      </article>
+      
+    </main>
+    <nav class="end-nav side-padding">
+      
+      <a ontouchstart="cardPressed.call(this)" ontouchend="cardReleased.call(this)" ontouchmove="cardReleased.call(this)" 
+  href="hxie13.github.io/posts/leetcode/" class="card blog-card bc-next" rel="bookmark" >
+  
+  <div class="card-img-container">
+    <p class="card-img-overlay">Next Article</p>
+    <picture>
+      
+      
+      
+      <source srcset="hxie13.github.io/hxie13.github.io/posts/leetcode/nyc_hu3b8708ce2ca8fdb22d59bd8debf48e34_267164_400x0_resize_q75_lanczos.jpg 1x, hxie13.github.io/hxie13.github.io/posts/leetcode/nyc_hu3b8708ce2ca8fdb22d59bd8debf48e34_267164_800x0_resize_q75_lanczos.jpg 2x, hxie13.github.io/hxie13.github.io/posts/leetcode/nyc_hu3b8708ce2ca8fdb22d59bd8debf48e34_267164_1200x0_resize_q75_lanczos.jpg 3x">
+      <img src="hxie13.github.io/hxie13.github.io/posts/leetcode/nyc_hu3b8708ce2ca8fdb22d59bd8debf48e34_267164_400x0_resize_q75_lanczos.jpg" class="card-img" >
+    </picture>
+  </div>
+  
+  <article class="card-body">
+    <h2 class="card-title">Hello</h2>
+    <p class="card-text"></p>
+    <div class="card-subtext muted-text">
+      <p>Posted <time datetime="2021-06-18 618:00">Jun 18, 2021</time></p>
+      <p></p>
+    </div>
+  </article>
+</a>
+      
+    </nav>
+    <footer class="side-padding" style="background-image: url('hxie13.github.io/img/home-blob-flip.svg');">
+    <a href="hxie13.github.io" class="footer-link">
+    
+        <img class="footer-icon" src="hxie13.github.io/hxie13.github.io/icons/home-page.png">
+    
+    </a>
+    
+    <a href="https://github.com/hxie13/" class="footer-link">
+    
+        <img class="footer-icon" src="hxie13.github.io/hxie13.github.io/icons/github.png" />
+    
+    </a>
+    
+    
+</footer>
+    
+  <script defer src="hxie13.github.io/hxie13.github.io/js/katex.js"></script>
+
+
+  <script defer src="hxie13.github.io/hxie13.github.io/js/auto-render.js" onload="renderMathInElement(document.body);"></script>
+
+
+<script src="hxie13.github.io/hxie13.github.io/js/core.min.js"></script>
+
+  </body>
+</html>

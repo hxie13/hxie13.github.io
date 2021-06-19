@@ -1,4 +1,16 @@
 baseURL = "hxie13.github.io"
-languageCode = "en-us"
-title = "Yang Zheng"
+languageCode = "zh"
 theme = "aether"
+canonifyurls = true
+paginate = 5 #每页的blog数量，默认10
+
+[params]
+	brand = "KSKC"
+	description = "Backup"
+	github = "https://github.com/hxie13/"
+	bgimg = "img/ignasi_pattern_s.png"	# 主页背景图片,位于assets路径中
+	headshotimg = "img/tian.jpg" #blue_1.jpg"大头照
+
+[markup]
+  [markup.highlight]
+    style = "igor"

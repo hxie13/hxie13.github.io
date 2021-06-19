@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="zh" dir="ltr">
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Hello &middot; </title>
+  <meta name="description" content="" />
+  <link href="hxie13.github.io/hxie13.github.io/css/katex.css" rel="stylesheet">
+  
+  
+  
+  
+  <link href="hxie13.github.io/hxie13.github.io/css/concated.min.css" rel="stylesheet">
+  
+  <style>
+    body {
+      background: #ecedef url("/hxie13.github.io/img/ignasi_pattern_s.png") repeat;
+    }
+  </style>
+</head>
+
+  <body class="single-body">
+    <nav class="nav-bar side-padding">
+  <h1 class="nav-header"><a href="hxie13.github.io" class="nav-text">KSKC</a></h1>
+  <div class="hamburger-menu">
+    <button onclick="hamburgerMenuPressed.call(this)" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="Menu">
+      <span></span>
+      <span></span>
+    </button>
+    <ul id="menu" class="hamburger-menu-overlay">
+      <li><a href="hxie13.github.io" class="hamburger-menu-overlay-link">Home</a></li>
+      
+      
+    </ul>
+  </div>
+</nav>
+
+    <main class="content side-text-padding">
+      <article class="post ">
+        <header class="post-header">
+          <h1 class="post-title">Hello</h1>
+          <p class="post-date">Posted <time datetime="2021-06-18">Jun 18, 2021</time></p>
+        </header>
+        <picture class="post-figure">
+          
+          
+          
+          <source srcset="hxie13.github.io/hxie13.github.io/posts/leetcode/nyc_hu3b8708ce2ca8fdb22d59bd8debf48e34_267164_711x0_resize_q75_lanczos.jpg 1x, hxie13.github.io/hxie13.github.io/posts/leetcode/nyc_hu3b8708ce2ca8fdb22d59bd8debf48e34_267164_1422x0_resize_q75_lanczos.jpg 2x, hxie13.github.io/hxie13.github.io/posts/leetcode/nyc_hu3b8708ce2ca8fdb22d59bd8debf48e34_267164_2133x0_resize_q75_lanczos.jpg 3x">
+          <img src="hxie13.github.io/hxie13.github.io/posts/leetcode/nyc_hu3b8708ce2ca8fdb22d59bd8debf48e34_267164_711x0_resize_q75_lanczos.jpg" >
+        </picture>
+        <small>Image by&nbsp;Aether</small>
+        
+        <h2 id="数组篇">数组篇</h2>
+<p>描述：长度为n的数组，其中元素都在0-n-1之间，假设保证数组中存在重复元素，找出满足条件的一个元素.</p>
+<ul>
+<li>分析：
+<ol>
+<li>暴力法遍历，时间复杂度O($n^2$)</li>
+<li>哈希表记录，时间复杂度O($n$)</li>
+<li>排序后查找</li>
+</ol>
+</li>
+<li>show me code</li>
+</ul>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#f00;font-style:italic">#include</span><span style="color:#f00;font-style:italic">&lt;iostream&gt;</span><span style="color:#f00;font-style:italic">
+</span><span style="color:#f00;font-style:italic">#include</span><span style="color:#f00;font-style:italic">&lt;vector&gt;</span><span style="color:#f00;font-style:italic">
+</span><span style="color:#f00;font-style:italic"></span><span style="color:#00f">using</span> <span style="color:#00f">namespace</span> std;
+
+<span style="color:#00f">int</span> <span style="color:#c34e00">duplicate_1</span>(vector&lt;<span style="color:#00f">int</span>&gt;&amp;);
+<span style="color:#00f">int</span> <span style="color:#c34e00">duplicate_2</span>(vector&lt;<span style="color:#00f">int</span>&gt;&amp;);
+<span style="color:#00f">int</span> <span style="color:#c34e00">duplicate_3</span>(vector&lt;<span style="color:#00f">int</span>&gt;&amp;);
+<span style="color:#00f">int</span> <span style="color:#c34e00">duplicate_4</span>(vector&lt;<span style="color:#00f">int</span>&gt;&amp;);
+
+<span style="color:#00f">int</span> <span style="color:#c34e00">main</span>(){
+	vector&lt;<span style="color:#00f">int</span>&gt;&amp; numbers {1,2,3,5,4,5};
+	<span style="color:#00f">int</span> output = duplicate_1(numbers);
+	cout &lt;&lt; output &lt;&lt; endl;		
+}
+
+<span style="color:#00f">int</span> <span style="color:#c34e00">duplicate_1</span>(vector&lt;<span style="color:#00f">int</span>&gt;&amp; numbers){ 
+	<span style="color:#00f">for</span>(<span style="color:#00f">int</span> i=0; i&lt;numbers.size(); i++){
+		<span style="color:#00f">for</span>(<span style="color:#00f">int</span> j=0; j&lt;numbers.size(); j++){
+			<span style="color:#00f">if</span>(numbers[j]==numbers[i] &amp;&amp; j!=i){
+				<span style="color:#00f">return</span> numbers[j];
+			}
+		}
+	}
+	<span style="color:#00f">return</span> -1; 
+}
+<span style="color:#00f">int</span> <span style="color:#c34e00">duplicate_2</span>(vector&lt;<span style="color:#00f">int</span>&gt;&amp; numbers){
+	<span style="color:#00f">if</span>(numbers.size()&lt;2){
+		<span style="color:#00f">return</span> -1;
+	}
+	sort(numbers.begin(), numbers.end());
+	<span style="color:#00f">for</span>(<span style="color:#00f">int</span> i=0; i&lt;numbers.size(); i++){
+		<span style="color:#00f">if</span>(numbers[i+1] == numbers[i]){
+			<span style="color:#00f">return</span> numbers[i+1];
+		}
+	}
+	<span style="color:#00f">return</span> -1;
+}
+
+</code></pre></div>
+      </article>
+      
+    </main>
+    <nav class="end-nav side-padding">
+      
+    </nav>
+    <footer class="side-padding" style="background-image: url('hxie13.github.io/img/home-blob-flip.svg');">
+    <a href="hxie13.github.io" class="footer-link">
+    
+        <img class="footer-icon" src="hxie13.github.io/hxie13.github.io/icons/home-page.png">
+    
+    </a>
+    
+    <a href="https://github.com/hxie13/" class="footer-link">
+    
+        <img class="footer-icon" src="hxie13.github.io/hxie13.github.io/icons/github.png" />
+    
+    </a>
+    
+    
+</footer>
+    
+  <script defer src="hxie13.github.io/hxie13.github.io/js/katex.js"></script>
+
+
+  <script defer src="hxie13.github.io/hxie13.github.io/js/auto-render.js" onload="renderMathInElement(document.body);"></script>
+
+
+<script src="hxie13.github.io/hxie13.github.io/js/core.min.js"></script>
+
+  </body>
+</html>
