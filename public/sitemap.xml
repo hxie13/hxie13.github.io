@@ -2,11 +2,14 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
+    <loc>https://hxie13.github.io/public/posts/os/</loc>
+    <lastmod>2022-02-14T20:46:30+08:00</lastmod>
+  </url><url>
     <loc>https://hxie13.github.io/public/</loc>
-    <lastmod>2022-02-14T10:24:26+08:00</lastmod>
+    <lastmod>2022-02-14T20:46:30+08:00</lastmod>
   </url><url>
     <loc>https://hxie13.github.io/public/posts/</loc>
-    <lastmod>2022-02-14T10:24:26+08:00</lastmod>
+    <lastmod>2022-02-14T20:46:30+08:00</lastmod>
   </url><url>
     <loc>https://hxie13.github.io/public/posts/tutorialhugo/</loc>
     <lastmod>2022-02-14T10:24:26+08:00</lastmod>
