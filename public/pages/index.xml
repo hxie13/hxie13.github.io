@@ -2,18 +2,18 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Pages on My New Hugo Site</title>
-    <link>http://hxie13.github.io/public/pages/</link>
+    <link>https://hxie13.github.io/public/pages/</link>
     <description>Recent content in Pages on My New Hugo Site</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>&amp;copy; BSD license</copyright>
-    <lastBuildDate>Mon, 10 Sep 2018 19:04:46 +0200</lastBuildDate><atom:link href="http://hxie13.github.io/public/pages/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 10 Sep 2018 19:04:46 +0200</lastBuildDate><atom:link href="https://hxie13.github.io/public/pages/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>分类目录</title>
-      <link>http://hxie13.github.io/public/pages/about/</link>
+      <link>https://hxie13.github.io/public/pages/about/</link>
       <pubDate>Mon, 10 Sep 2018 19:04:46 +0200</pubDate>
       
-      <guid>http://hxie13.github.io/public/pages/about/</guid>
+      <guid>https://hxie13.github.io/public/pages/about/</guid>
       <description>  Page   Content   123
   </description>
     </item>
