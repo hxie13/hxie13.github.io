@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>page on My New Hugo Site</title>
+    <link>https://hxie13.github.io/public/tags/page/</link>
+    <description>Recent content in page on My New Hugo Site</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>&amp;copy; BSD license</copyright>
+    <lastBuildDate>Sun, 13 Feb 2022 13:30:44 +0800</lastBuildDate><atom:link href="https://hxie13.github.io/public/tags/page/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>GitLearn</title>
+      <link>https://hxie13.github.io/public/posts/gitlearn/</link>
+      <pubDate>Sun, 13 Feb 2022 13:30:44 +0800</pubDate>
+      
+      <guid>https://hxie13.github.io/public/posts/gitlearn/</guid>
+      <description>记录Git本地及远程操作和同步命令的使用.</description>
+    </item>
+    
+  </channel>
+</rss>

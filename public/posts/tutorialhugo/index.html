@@ -3,19 +3,22 @@
 <head prefix="og: http://ogp.me/ns#">
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
-  <meta property="og:title" content=" Tags &middot;  My New Hugo Site" />
+  <meta property="og:title" content=" TutorialHugo &middot;  My New Hugo Site" />
   
     <meta name="theme-color" content="#hexcolor" />
   
   <meta property="og:site_name" content="My New Hugo Site" />
-  <meta property="og:url" content="https://hxie13.github.io/public/tags/" />
+  <meta property="og:url" content="https://hxie13.github.io/public/posts/tutorialhugo/" />
   
   
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content="article" />
+    
+    <meta property="og:article:published_time" content="2022-02-14T10:24:26&#43;08:00" />
+    
   
 
   <title>
-     Tags &middot;  My New Hugo Site
+     TutorialHugo &middot;  My New Hugo Site
   </title>
 
   <link rel="alternative stylesheet" href="https://hxie13.github.io/public/css/bootstrap.min.css" />
@@ -73,21 +76,67 @@
   </header>
   <main class="container">
 
-<section class="taxonomy-terms">
-  <h1>Tags</h1>
-  
-  <div class="list-group">
-	
-      <a class="list-group-item" href="https://hxie13.github.io/public/tags/content/">
-        Content
-      </a>
+
+
+<article>
+  <header class="article-title">
+    <h1 class="text-primary">TutorialHugo</h1>
+  </header>
+  <div class="delimiter"></div>
+  <section>
+    <h2 id="目录功能介绍">目录功能介绍</h2>
+<h3 id="archetypes-目录">Archetypes 目录</h3>
+<p>静态源码文件以section组织，每个section使用相应同名的archetypes，以.md内容自动响应填充meta data.
+例如hugo new posts\demo.md，hugo会按以下顺序在archetypes目录下搜索posts.md文件，寻找到哪个文件则使用哪个文件内容作为模板.</p>
+<ul>
+<li>archetypes\posts.md</li>
+<li>archetypes\default.md</li>
+<li>themes\themename\archetypes\posts.md</li>
+<li>themes\themename\archetypes\default.md</li>
+</ul>
+<h3 id="public-目录">Public 目录</h3>
+<p>静态网页的输出目录</p>
+
+  </section>
+  <div class="clearfix">
     
-      <a class="list-group-item" href="https://hxie13.github.io/public/tags/page/">
-        page
-      </a>
+      <div class="post-date pull-left">
+        <span class="small">
+          Posted on
+          Feb 14, 2022 at 10:24
+        </span>
+      </div>
     
+    <div class="pull-right">
+      
+    </div>
   </div>
-</section>
+  <footer>
+    
+	
+   
+    <div class="delimiter"></div>
+    <div class="pager-container">
+      
+        <a class="btn btn-primary btn-older-posts" href="https://hxie13.github.io/public/posts/tcp/">
+          <div>
+            <span aria-hidden="true">&larr;</span> Older Posts
+          </div>
+        </a>
+      
+      
+        <a class="btn btn-primary btn-newer-posts disabled" href="#">
+          <div>
+            Newer Posts <span aria-hidden="true">&rarr;</span>
+          </div>
+        </a>
+      
+         
+    </div>
+  </footer>
+</article>
+<div class="delimiter"></div>
+
   </main>
   <footer class="container global-footer">
     <div class="copyright-note pull-left">

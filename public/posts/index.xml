@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>My New Hugo Site</title>
-    <link>https://hxie13.github.io/public/</link>
-    <description>Recent content on My New Hugo Site</description>
+    <title>Posts on My New Hugo Site</title>
+    <link>https://hxie13.github.io/public/posts/</link>
+    <description>Recent content in Posts on My New Hugo Site</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>&amp;copy; BSD license</copyright>
-    <lastBuildDate>Mon, 14 Feb 2022 10:24:26 +0800</lastBuildDate><atom:link href="https://hxie13.github.io/public/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 14 Feb 2022 10:24:26 +0800</lastBuildDate><atom:link href="https://hxie13.github.io/public/posts/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>TutorialHugo</title>
       <link>https://hxie13.github.io/public/posts/tutorialhugo/</link>
@@ -34,16 +34,6 @@
       
       <guid>https://hxie13.github.io/public/posts/gitlearn/</guid>
       <description>记录Git本地及远程操作和同步命令的使用.</description>
-    </item>
-    
-    <item>
-      <title>分类目录</title>
-      <link>https://hxie13.github.io/public/pages/about/</link>
-      <pubDate>Mon, 10 Sep 2018 19:04:46 +0200</pubDate>
-      
-      <guid>https://hxie13.github.io/public/pages/about/</guid>
-      <description>  Page   Content   123
-  </description>
     </item>
     
   </channel>
