@@ -2,10 +2,10 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://hxie13.github.io/public/</loc>
+    <loc>https://hxie13.github.io/public/posts/</loc>
     <lastmod>2022-02-15T14:32:03+08:00</lastmod>
   </url><url>
-    <loc>https://hxie13.github.io/public/posts/</loc>
+    <loc>https://hxie13.github.io/public/</loc>
     <lastmod>2022-02-15T14:32:03+08:00</lastmod>
   </url><url>
     <loc>https://hxie13.github.io/public/posts/expinterview/</loc>
