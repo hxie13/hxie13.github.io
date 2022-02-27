@@ -119,10 +119,39 @@
 </ul>
 <h4 id="计算机网络">计算机网络</h4>
 <ul>
-<li>三次握手，四次挥手</li>
+<li><a href="https://blog.csdn.net/weixin_42621338/article/details/87354737?spm=1001.2101.3001.6650.7&amp;utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7ERate-7.pc_relevant_antiscan&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7ERate-7.pc_relevant_antiscan&amp;utm_relevant_index=14" target="_blank">三次握手，四次挥手</a>
+
+<ul>
+<li>为什么要三次握手，两次不行吗？
+<ul>
+<li><em>防止因失效的连接请求报文而出现重复连接</em>，举个例子，若初次发出的请求连接报文因为网络拥堵而迟迟未到达接收端，如此客户端便不会接受到ACK报文，可能认定服务器未收到SYN报文，于是再发送一条请求连接报文，此次连接顺利建立，传输数据，最后关闭连接；若是两次握手，当初次的请求连接报文到达服务端时，服务端进入<strong>ESTABLISHED</strong>状态，返回确认应答给客户端，客户端也进入<strong>ESTABLISHED</strong>状态，连接被重复建立，造成网络资源浪费，而三次握手规则下，当客户端收到重复确认应答后，识别出该应答为历史应答，便不会进入<strong>ESTABLISHED</strong>状态了，同样也不会建立新的连接了，接着通过发送RST报文通知服务端终止连接.</li>
+</ul>
+</li>
+</ul>
+</li>
 <li>TCP/IP头部</li>
-<li>HTTP、HTTPS加密原理以及HTTP完整的传输过程</li>
+<li>HTTP、<a href="https://blog.csdn.net/weixin_44045328/article/details/107179755" target="_blank">HTTPS加密原理</a>
+以及<a href="https://zhuanlan.zhihu.com/p/43369093" target="_blank">HTTP完整的传输过程</a>
+</li>
 <li>子网掩码</li>
+<li>浏览器输入URL后发生了什么
+<ul>
+<li>域名解析-&gt;IP地址
+<ul>
+<li>浏览器解析该域名，首先查看本地hosts文件，看其中有没有请求域名所对应的IP地址缓存，若有则直接使用hosts文件中的IP地址；</li>
+<li>若hosts文件中未寻找到对应IP地址，浏览器向本地DNS服务器(ISP，例如中国电信)发起域名-&gt;IP地址的递归查询请求，若本地DNS服务器无该缓存，转向DNS根服务器进行查询；</li>
+<li>根DNS服务器未记录具体域名和IP地址的对应关系，而是返回给本地DNS服务器查询地址对应的域名服务器地址，该过程是迭代的过程；</li>
+<li>本地DNS继续向域名服务器(.com)发出请求，但域名服务器同样未记录具体域名和IP地址的对应关系，但会返回给本地DNS服务器查询地址对应的域名解析服务器地址；</li>
+<li>最后，本地DNS服务器向域名解析服务器发出请求，收到一个域名与IP地址的对应关系，本地DNS服务器在将IP地址返回给用户电脑的同时，将该对应关系缓存起来以备其它用户查询，加快网络访问.</li>
+</ul>
+</li>
+<li>建立TCP连接(向web服务器80端口发起TCP连接请求)；</li>
+<li>浏览器向web服务器发起http请求；</li>
+<li>服务器端处理，返回http响应；</li>
+<li>关闭TCP连接</li>
+<li>浏览器解析资源，布局渲染.</li>
+</ul>
+</li>
 </ul>
 <h4 id="数据库">数据库</h4>
 <ul>
