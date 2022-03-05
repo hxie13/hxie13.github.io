@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Paper on 译码为梦</title>
+    <link>https://hxie13.github.io/public/tags/paper/</link>
+    <description>Recent content in Paper on 译码为梦</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>&amp;copy; BSD license</copyright>
+    <lastBuildDate>Sat, 05 Mar 2022 14:36:39 +0800</lastBuildDate><atom:link href="https://hxie13.github.io/public/tags/paper/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>DailyPaper_constraintAR</title>
+      <link>https://hxie13.github.io/public/posts/dailypaper_constraintar/</link>
+      <pubDate>Sat, 05 Mar 2022 14:36:39 +0800</pubDate>
+      
+      <guid>https://hxie13.github.io/public/posts/dailypaper_constraintar/</guid>
+      <description>Single/Multiple revolution lambert problem constraints for optical track to track association 目的 解决多圈的track-to-track association问题，在单圈T2TA问题中，单圈BVP-Con和BVP-Opt方法被提出，文章将该方法框架泛化，建立通用的工作流程。
+应用背景 光学观测中，观测者与目标间的斜距无法测量，对同一目标的两段观测数据关联无法通过直接的轨道信息比较完成；常结合初始轨道确定(IOD)算法获取目标初步轨道(不确定性较大)。
+技术背景   Constrained Admissible Region(CAR)
+仅角度观测下，引入约束限制距离假设对的范围，结合BVP问题自然转变为优化问题(以两个epoch的距离为参数)。但该方法仅适用于单圈Lambert问题。
+  Preprocess of optical image
+可以从图像中获取短序列的角度测量，角度测量的一个短弧数据被称为一个tracklet，此外，可以依靠Maruskin 所提角运动模型估计角速度.
+  CAR分类
+$\rho-\dot{\rho}$ 平面类型和$\rho-\rho$平面类型，前者依赖一个时刻属性向量$(\alpha_1,\beta_1,\dot{\alpha_1},\dot{\beta_1})^T$信息建立，求解IVP问题；后者依赖两个时刻角信息$(\alpha_1,\beta_1,\alpha_2,\beta_2)^T$，也即LOS向量，求解BVP问题
+  </description>
+    </item>
+    
+  </channel>
+</rss>

@@ -7,7 +7,42 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>&amp;copy; BSD license</copyright>
-    <lastBuildDate>Fri, 25 Feb 2022 19:36:11 +0800</lastBuildDate><atom:link href="https://hxie13.github.io/public/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 05 Mar 2022 21:53:17 +0800</lastBuildDate><atom:link href="https://hxie13.github.io/public/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>LibForSCI</title>
+      <link>https://hxie13.github.io/public/posts/libforsci/</link>
+      <pubDate>Sat, 05 Mar 2022 21:53:17 +0800</pubDate>
+      
+      <guid>https://hxie13.github.io/public/posts/libforsci/</guid>
+      <description>微分方程求解 打靶法  博客  B站视频   配点法  博客   </description>
+    </item>
+    
+    <item>
+      <title>Picard配点迭代法</title>
+      <link>https://hxie13.github.io/public/posts/picard%E9%85%8D%E7%82%B9%E8%BF%AD%E4%BB%A3%E6%B3%95/</link>
+      <pubDate>Sat, 05 Mar 2022 21:04:06 +0800</pubDate>
+      
+      <guid>https://hxie13.github.io/public/posts/picard%E9%85%8D%E7%82%B9%E8%BF%AD%E4%BB%A3%E6%B3%95/</guid>
+      <description>轨道递推(传播)和转移方法发展路线 数值方法  变步长高阶龙格库塔方法 Gauss-Jackson方法 打靶法：将两点BVP转化为多个IVP问题；对初始估计较敏感，收敛区间较小； 有限差分法：需要构建大规模代数矩阵方程； 多步打靶法：将大的时间区间分割为多个子区间，得到多个BVP问题，引入额外的约束条件来保证各子区间之间解的连续性； 修正打靶法 配点法：待求解方程被转化为非线性代数方程组，然后适用Newton-Raphson或Picard迭代法进行求解。  </description>
+    </item>
+    
+    <item>
+      <title>DailyPaper_constraintAR</title>
+      <link>https://hxie13.github.io/public/posts/dailypaper_constraintar/</link>
+      <pubDate>Sat, 05 Mar 2022 14:36:39 +0800</pubDate>
+      
+      <guid>https://hxie13.github.io/public/posts/dailypaper_constraintar/</guid>
+      <description>Single/Multiple revolution lambert problem constraints for optical track to track association 目的 解决多圈的track-to-track association问题，在单圈T2TA问题中，单圈BVP-Con和BVP-Opt方法被提出，文章将该方法框架泛化，建立通用的工作流程。
+应用背景 光学观测中，观测者与目标间的斜距无法测量，对同一目标的两段观测数据关联无法通过直接的轨道信息比较完成；常结合初始轨道确定(IOD)算法获取目标初步轨道(不确定性较大)。
+技术背景   Constrained Admissible Region(CAR)
+仅角度观测下，引入约束限制距离假设对的范围，结合BVP问题自然转变为优化问题(以两个epoch的距离为参数)。但该方法仅适用于单圈Lambert问题。
+  Preprocess of optical image
+可以从图像中获取短序列的角度测量，角度测量的一个短弧数据被称为一个tracklet，此外，可以依靠Maruskin 所提角运动模型估计角速度.
+  CAR分类
+$\rho-\dot{\rho}$ 平面类型和$\rho-\rho$平面类型，前者依赖一个时刻属性向量$(\alpha_1,\beta_1,\dot{\alpha_1},\dot{\beta_1})^T$信息建立，求解IVP问题；后者依赖两个时刻角信息$(\alpha_1,\beta_1,\alpha_2,\beta_2)^T$，也即LOS向量，求解BVP问题
+  </description>
+    </item>
+    
     <item>
       <title>TimeLine</title>
       <link>https://hxie13.github.io/public/posts/timeline/</link>
