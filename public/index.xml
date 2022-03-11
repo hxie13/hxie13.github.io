@@ -7,7 +7,21 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>&amp;copy; BSD license</copyright>
-    <lastBuildDate>Sat, 05 Mar 2022 21:53:17 +0800</lastBuildDate><atom:link href="https://hxie13.github.io/public/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 11 Mar 2022 10:11:28 +0800</lastBuildDate><atom:link href="https://hxie13.github.io/public/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>DailyPaper_EOArray</title>
+      <link>https://hxie13.github.io/public/posts/dailypaper_eoarray/</link>
+      <pubDate>Fri, 11 Mar 2022 10:11:28 +0800</pubDate>
+      
+      <guid>https://hxie13.github.io/public/posts/dailypaper_eoarray/</guid>
+      <description>关于长春观测站地面光电设备情况及数据获取工作的介绍  自2017年4月运行， 光电阵列包含8架小型望远镜，每架口径$15 cm$，焦距$15 cm$，CCD相机像素$3 K \times 3 K$，视场$14^{\circ} \times 14^{\circ}$，像素分辨率$16^{&#39;&#39;}$；每晚可获取超过3到4千LEI的极短弧观测，$85%$观测弧段可关联至NORAD编目库。 使用基于距离搜索的方式对VSAs数据进行IOD定轨，使用几何方法对IOD结果进行关联，IOD平均成功率在$91%$左右，真阳率超过$86%$。 IOD方法与Gauss,Laplace,Gooding, 和 Double-r方法进行对比，关联方法与CBTA方法对比。  应用背景
+ 空间碰撞预警与避让 碎片清除依赖于准确的编目 小目标的发现,定轨和量化(characterization)对SSA意义重大 截至20180104，NORAD编目库中对象超过18835，其中LEO对象多为超过10cm的目标，多由雷达跟踪数据维护；但尺寸在1厘米级的对象数量超过750000，有必要进行厘米级对象的编目任务，这需要地基或天基传感器能检测到足够小的目标。  现有方案
+ LEO大口径光学轨道星座  避免地基设备仅在傍晚/晴朗天气状况工作的限制 巡天模式(Survey Mode)下，LEO目标在光学视场中途经间隔(pass duration)很短，导致VSAs(tracklets):each of which is a set of angular observations over a short period of time.    文章工作
+ 对夜晚收集VSAs处理，初定轨+编目关联，VSAs平均弧长在36s左右. 对UCTs的VSAs数据处理进行的初定轨误差较大，因为range/range rate信息未知或是基本不受约束(largely unconstrained)，需要进行多tracklets关联从而二次precise orbit determination. Too-short arc(TSA) problem：IOD结果误差较大，造成多tracklets关联以及后续精定轨困难，称之为TSA.  IOD相关工作
+ 传统方法在处理VSA角度观测时可能会失败，由于观测噪声在极短弧长内对定轨结果干扰很大。 Range search method：对两个时刻斜距进行假设，已知两个时刻目标位置及其对应的时间来确定轨道，称为Lambert问题，桑吉章等人2017年处理地基真实，天基仿真VSA数据时取得超过$90%$的成功率。  关联编目相关工作
+ 基于协方差的轨迹关联方法，需要有输入IOD结果的协方差信息； 桑吉章等人提出几何法用于IOD tracks关联，无需协方差信息；  望远镜相关信息</description>
+    </item>
+    
     <item>
       <title>LibForSCI</title>
       <link>https://hxie13.github.io/public/posts/libforsci/</link>
