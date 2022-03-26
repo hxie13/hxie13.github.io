@@ -7,7 +7,16 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>&amp;copy; BSD license</copyright>
-    <lastBuildDate>Tue, 15 Mar 2022 14:42:37 +0800</lastBuildDate><atom:link href="https://hxie13.github.io/public/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 17 Mar 2022 22:00:22 +0800</lastBuildDate><atom:link href="https://hxie13.github.io/public/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Tfc</title>
+      <link>https://hxie13.github.io/public/posts/tfc/</link>
+      <pubDate>Thu, 17 Mar 2022 22:00:22 +0800</pubDate>
+      
+      <guid>https://hxie13.github.io/public/posts/tfc/</guid>
+      <description>The Thoery of functional components 应用场景  求解微分方程. 开展约束优化(IVP,BVP中的最小二乘法). 求解特定类型的最优控制问题. 路径规划. 变分计算.  </description>
+    </item>
+    
     <item>
       <title>Review</title>
       <link>https://hxie13.github.io/public/posts/review/</link>

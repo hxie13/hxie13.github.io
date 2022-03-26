@@ -235,6 +235,192 @@
 <p>调度程序的功能在于，决定应当运行哪个进程，什么时候运行，运行多长时间。</p>
 <h3 id="进程的实现">进程的实现</h3>
 <p>进程表：为实现进程模型，操作系统维护的一个结构数组，每个进程占用一个进程表项(一个表项又称为一个PCB)。</p>
+<h2 id="0-多路复用select-poll-epoll">0. 多路复用：Select, poll, epoll</h2>
+<ul>
+<li>
+<p>网络程序运行全过程</p>
+<ul>
+<li>内核空间中工作队列内多个进程分片运行.</li>
+<li>执行网络程序的进程A执行至创建socket语句时，操作系统创建一个由文件系统管理的socket对象.
+<ul>
+<li>socket对象包含发送缓冲区，接受缓冲区，等待队列.</li>
+</ul>
+</li>
+<li>进程A运行至recv时，若网络数据未完全到达，操作系统将进程A从工作队列中放至该socket的等待队列中，进程A被阻塞，不会往下执行代码，也不会占用CPU资源.
+<ul>
+<li>注意，此处OS只是将堵塞进程A的引用添加至等待队列，以便数据就绪时获取进程对象将其唤醒，而不是直接将进程A纳入自己管理之下.</li>
+</ul>
+</li>
+<li>待socket接收到数据后，操作系统将socket等待队列中的进程A唤醒放回工作队列，网络程序继续执行，由于socket接收缓冲区有数据了，recv可以返回接收到的数据.</li>
+</ul>
+</li>
+<li>
+<p>内核接受网络数据全过程：</p>
+<ul>
+<li>网卡接收网络数据.</li>
+<li>数据写入内存.</li>
+<li>给CPU发送中断信号通知其数据到来.</li>
+<li>CPU执行中断程序：
+<ul>
+<li>将内存中网络数据写入对应socket的接收缓冲区.</li>
+<li>唤醒对应socket等待队列中的进程，将其重新放入工作队列.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>问题</p>
+<ul>
+<li>
+<p>socket进程阻塞，网络数据到内存中之后，操作系统如何知道数据对应哪个socket？</p>
+<ul>
+<li>网络数据包中包含IP和PORT信息，进程中socket也对应一个PORT,操作系统内核可以通过PORT找到对应socket.</li>
+</ul>
+</li>
+<li>
+<p>如何监听多个socket的数据？</p>
+<ul>
+<li>多路复用.</li>
+</ul>
+</li>
+</ul>
+<h2 id="01-发展演变">0.1 发展演变</h2>
+<p>recv仅能监听单个socket，为管理多个客户端连接，高效监视多个socket成为迫切需求.</p>
+<h3 id="epoll">epoll</h3>
+<p>三个关键函数：</p>
+<ul>
+<li>epoll_create：创建一个epoll对象.</li>
+<li>epoll_ctl：向epoll对象添加要管理的连接.</li>
+<li>epoll_wait：等待其管理的连接上的IO事件.</li>
+</ul>
+<h4 id="1-服务器端通过accept创建出专门用于与客户端通信的socket并将其放到当前进程的打开文件列表中">1. 服务器端通过accept创建出专门用于与客户端通信的socket，并将其放到当前进程的打开文件列表中.</h4>
+<ul>
+<li>
+<p>根据服务器文件描述符fd得到监听的socket对象(功能等效于<code>sockdf_lookup_light</code>)</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">f <span style="color:#f92672">=</span> fdget(fd);
+sock <span style="color:#f92672">=</span> sock_from_file(f). <span style="color:#75715e">// 监听socket对象
+</span></code></pre></div></li>
+<li>
+<p>创建新的socket并根据sock初始化</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">newsock <span style="color:#f92672">=</span> sock_alloc();
+newsock<span style="color:#f92672">-&gt;</span>type <span style="color:#f92672">=</span> sock<span style="color:#f92672">-&gt;</span>type;
+newsock<span style="color:#f92672">-&gt;</span>ops <span style="color:#f92672">=</span> sock<span style="color:#f92672">-&gt;</span>ops; <span style="color:#75715e">// 协议操作函数几何ops
+</span></code></pre></div></li>
+<li>
+<p>创建newfile与newsock绑定</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">file <span style="color:#f92672">*</span><span style="color:#a6e22e">sock_alloc_file</span>(newsock, ...){
+  file<span style="color:#f92672">*</span> newfile;
+  <span style="color:#75715e">// Below, socket_file_ops被赋予给了newfile-&gt;f_op，意味着newfile-&gt;f_op-&gt;pool是sock_poll
+</span><span style="color:#75715e"></span>  newfile <span style="color:#f92672">=</span> alloc_file_pseudo(..., <span style="color:#f92672">&amp;</span>socket_file_ops);
+  newsock<span style="color:#f92672">-&gt;</span>file <span style="color:#f92672">=</span> newfile;
+  newfile<span style="color:#f92672">-&gt;</span>private_data <span style="color:#f92672">=</span> newsock;
+  <span style="color:#66d9ef">return</span> newfile;
+}
+</code></pre></div></li>
+<li>
+<p>接收连接</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"> err <span style="color:#f92672">=</span> sock<span style="color:#f92672">-&gt;</span>ops<span style="color:#f92672">-&gt;</span>accept(sock, newsock,...);
+</code></pre></div></li>
+<li>
+<p>用户端地址从内核态空间复制到用户态空间</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">err <span style="color:#f92672">=</span> move_addr_to_user(<span style="color:#f92672">&amp;</span>address, len, upeer_sockaddr, upeer_addrlen);
+</code></pre></div></li>
+<li>
+<p>添加新文件到当前进程的打开文件列表</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">newfd <span style="color:#f92672">=</span> __get_unused_fd_flags(flags, nofile);
+fd_install(newfd, newfile);
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">fd_install</span>(newfd, <span style="color:#f92672">*</span>newfile){
+  files_struct <span style="color:#f92672">*</span>files <span style="color:#f92672">=</span> current<span style="color:#f92672">-&gt;</span>files;
+  fdtable <span style="color:#f92672">*</span>fdt;
+  fdt <span style="color:#f92672">=</span> files_fdtable(files);
+  BUG_ON(fdt<span style="color:#f92672">-&gt;</span>fd[newfd] <span style="color:#f92672">!=</span> NULL);
+  rcu_assign_pointer(fdt<span style="color:#f92672">-&gt;</span>fd[newfd], newfile);
+}
+</code></pre></div></li>
+</ul>
+<h4 id="2-用户进程调用epoll_create内核创建一个struct-eventpoll内核对象同样将其关联至当前进程打开的文件列表中">2. 用户进程调用epoll_create(),内核创建一个struct eventpoll内核对象，同样将其关联至当前进程打开的文件列表中.</h4>
+<ul>
+<li>
+<p>eventpoll结构体</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">eventpoll</span>{
+  <span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">mutex</span> mtx;
+  wait_queue_head_t wq;
+  wait_queue_head_t poll_wait;
+  <span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">list_head</span> rdllist;
+  rwlock_t lock;
+  <span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">rb_root_cached</span> rbr;
+  <span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">epitem</span> <span style="color:#f92672">*</span>ovflist; <span style="color:#75715e">// 就绪epitem单链表
+</span><span style="color:#75715e"></span>  <span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">wakeup_source</span> <span style="color:#f92672">*</span>ws;
+  <span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">user_struct</span> <span style="color:#f92672">*</span>user;
+  <span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">file</span> <span style="color:#f92672">*</span>file;
+  u64 gen;
+  <span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">hlist_head</span> refs;
+}
+</code></pre></div></li>
+<li>
+<p>创建epoll</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">static</span> <span style="color:#66d9ef">int</span> <span style="color:#a6e22e">do_epoll_create</span>(<span style="color:#66d9ef">int</span> flags){
+  <span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">eventpoll</span> <span style="color:#f92672">*</span>ep <span style="color:#f92672">=</span> NULL;
+  <span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">file</span> <span style="color:#f92672">*</span>file;
+
+  error <span style="color:#f92672">=</span> ep_alloc(<span style="color:#f92672">&amp;</span>ep);  <span style="color:#75715e">// 创建eventpoll对象并初始化
+</span><span style="color:#75715e"></span>  fd <span style="color:#f92672">=</span> get_unused_fd_flags(O_RDWR <span style="color:#f92672">|</span> (flags <span style="color:#f92672">&amp;</span> O_CLOEXEC));
+    
+  file <span style="color:#f92672">=</span> anon_inode_getfile(...);
+  ep<span style="color:#f92672">-&gt;</span>file <span style="color:#f92672">=</span> file;
+  fd_install(fd, file);
+  <span style="color:#66d9ef">return</span> fd;
+}
+</code></pre></div></li>
+</ul>
+<h4 id="3-使用epoll_ctl向epoll内核对象注册客户端的连接socket">3. 使用epoll_ctl向epoll内核对象注册客户端的连接socket.</h4>
+<ul>
+<li>
+<p>根据传入eventpoll、socket文件描述符找到对应的内核对象</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">eventpoll <span style="color:#f92672">*</span>ep;
+fd f, tf;
+
+<span style="color:#75715e">// 寻找eventpoll内核对象
+</span><span style="color:#75715e"></span>f <span style="color:#f92672">=</span> fget(epfd);
+ep <span style="color:#f92672">=</span> f.file<span style="color:#f92672">-&gt;</span>private_data;
+
+<span style="color:#75715e">// 寻找socket对应的file内核对象
+</span><span style="color:#75715e"></span>tf <span style="color:#f92672">=</span> fget(fd);
+</code></pre></div></li>
+<li>
+<p>在<code>EPOLL_CTL_ADD</code>操作中，执行<code>ep_insert</code>函数完成epitem的注册.</p>
+<ul>
+<li>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">ep_pqueue</span>{
+  poll_table pt;
+  <span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">epitem</span> <span style="color:#f92672">*</span>epi;
+}
+</code></pre></div></li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">static</span> <span style="color:#66d9ef">int</span> <span style="color:#a6e22e">ep_insert</span>(eventpoll <span style="color:#f92672">*</span>ep, epoll_event <span style="color:#f92672">*</span>event, tf.file, fd){
+    
+  ep_pqueue epq; 
+
+  <span style="color:#75715e">// 创建epi并初始化
+</span><span style="color:#75715e"></span>  epitem <span style="color:#f92672">*</span>epi;
+  INIT_LIST_HEAD(<span style="color:#f92672">&amp;</span>epi<span style="color:#f92672">-&gt;</span>rdllink);
+  epi<span style="color:#f92672">-&gt;</span>ep <span style="color:#f92672">=</span> ep; <span style="color:#75715e">// epi-&gt;ep指向eventpoll对象
+</span><span style="color:#75715e"></span>  ep_set_ffd(<span style="color:#f92672">&amp;</span>epi<span style="color:#f92672">-&gt;</span>ffd, tf.file, fd); <span style="color:#75715e">// 利用待添加socket的file和fd来填充epi-&gt;ffd.
+</span><span style="color:#75715e"></span>  epi<span style="color:#f92672">-&gt;</span>event <span style="color:#f92672">=</span> <span style="color:#f92672">*</span>event;
+  epi<span style="color:#f92672">-&gt;</span>next <span style="color:#f92672">=</span> EP_UNACTIVE_PTR;
+
+  <span style="color:#75715e">// 将epi插入至ep的红黑树中
+</span><span style="color:#75715e"></span>  ep_rbtree_insert(ep, epi);
+
+  <span style="color:#75715e">// 设置socket等待队列
+</span><span style="color:#75715e"></span>  epq.epi <span style="color:#f92672">=</span> epi;
+  init_poll_funcptr(<span style="color:#f92672">&amp;</span>epq.pt, ep_ptable_queue_proc); <span style="color:#75715e">// 用队列回调初始化poll table
+</span><span style="color:#75715e"></span>
+  <span style="color:#75715e">// 将epi与池挂钩关联
+</span><span style="color:#75715e"></span>  revents <span style="color:#f92672">=</span> ep_item_poll(epi, <span style="color:#f92672">&amp;</span>epq.pt, <span style="color:#ae81ff">1</span>);
+}
+</code></pre></div></li>
+</ul>
 
   </section>
   <div class="clearfix">
