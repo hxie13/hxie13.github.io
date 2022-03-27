@@ -3,22 +3,22 @@
 <head prefix="og: http://ogp.me/ns#">
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
-  <meta property="og:title" content=" Tfc &middot;  译码为梦" />
+  <meta property="og:title" content=" Linux高性能服务器编程 &middot;  译码为梦" />
   
     <meta name="theme-color" content="#hexcolor" />
   
   <meta property="og:site_name" content="译码为梦" />
-  <meta property="og:url" content="https://hxie13.github.io/public/posts/tfc/" />
+  <meta property="og:url" content="https://hxie13.github.io/public/posts/linux%E9%AB%98%E6%80%A7%E8%83%BD%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%BC%96%E7%A8%8B/" />
   
   
     <meta property="og:type" content="article" />
     
-    <meta property="og:article:published_time" content="2022-03-17T22:00:22&#43;08:00" />
+    <meta property="og:article:published_time" content="2022-03-27T19:44:07&#43;08:00" />
     
   
 
   <title>
-     Tfc &middot;  译码为梦
+     Linux高性能服务器编程 &middot;  译码为梦
   </title>
 
   <link rel="alternative stylesheet" href="https://hxie13.github.io/public/css/bootstrap.min.css" />
@@ -104,19 +104,40 @@
 
 <article>
   <header class="article-title">
-    <h1 class="text-primary">Tfc</h1>
+    <h1 class="text-primary">Linux高性能服务器编程</h1>
   </header>
   <div class="delimiter"></div>
   <section>
-    <h2 id="the-thoery-of-functional-components">The Thoery of functional components</h2>
-<h3 id="应用场景">应用场景</h3>
+    <h3 id="15-arp协议工作原理">1.5 ARP协议工作原理</h3>
+<p><strong>ARP协议</strong>能实现任意网络层地址到任意物理地址的转换，典型的是IP地址与以太网地址(MAC地址)的转换.</p>
+<p>以太网ARP请求/应答报文格式：</p>
+<table>
+    <tr>
+        <th align="center">硬件类型</th>
+        <th align="center">协议类型</th>
+        <th align="center">硬件地址长度</th>
+        <th>协议地址长度</th>
+        <th>操作</th>
+        <th>发送端以太网地址</th>
+        <th>发送端IP地址</th>
+        <th>目的端以太网地址</th>
+        <th>目的端IP地址</th>
+    </tr>
+</table>
 <ul>
-<li>求解微分方程.</li>
-<li>开展约束优化(IVP,BVP中的最小二乘法).</li>
-<li>求解特定类型的最优控制问题.</li>
-<li>路径规划.</li>
-<li>变分计算.</li>
+<li>硬件类型( 2 字节)，<em>1</em> 表示MAC地址.</li>
+<li>协议类型( 2 字节)，<em>0x800</em> 表示IP地址.</li>
+<li>硬件地址长度( 1 字节)，MAC地址长度为 <strong>6</strong> 字节.</li>
+<li>协议地址长度( 1 字节)，IP(v4)地址长度为 <strong>4</strong> 字节.</li>
+<li>操作( 2 字节)，分四种操作类型，ARP请求(值为 <em>1</em> )，ARP应答(值为 <em>2</em> )，RARP请求(值为 <em>3</em> )，RARP应答(值为 <em>4</em> ).</li>
+<li>后四个字段，每个占 4 字节，分别表示发送端以太网地址，发送端 IP 地址，目的端以太网地址，目的端 IP 地址.</li>
 </ul>
+<h4 id="note-1">Note. 1</h4>
+<p>ARP 请求/应答报文长度为 28 字节，以太网帧头部和尾部 18 字节，故一个携带 ARP 请求/应答的以太网帧共 46 字节.</p>
+<hr>
+<h4 id="note-2">Note. 2</h4>
+<p>但有些网络实现要求以太网帧数据部分长度至少为 46 字节，此时 ARP 请求/应答报文将填充一些字节以满足要求，使得最后的以太网帧长度为 64 字节.</p>
+<hr>
 
   </section>
   <div class="clearfix">
@@ -124,7 +145,7 @@
       <div class="post-date pull-left">
         <span class="small">
           Posted on
-          Mar 17, 2022 at 22:00
+          Mar 27, 2022 at 19:44
         </span>
       </div>
     
@@ -139,14 +160,14 @@
     <div class="delimiter"></div>
     <div class="pager-container">
       
-        <a class="btn btn-primary btn-older-posts" href="https://hxie13.github.io/public/posts/review/">
+        <a class="btn btn-primary btn-older-posts" href="https://hxie13.github.io/public/posts/tfc/">
           <div>
             <span aria-hidden="true">&larr;</span> Older Posts
           </div>
         </a>
       
       
-        <a class="btn btn-primary btn-newer-posts" href="https://hxie13.github.io/public/posts/linux%E9%AB%98%E6%80%A7%E8%83%BD%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%BC%96%E7%A8%8B/">
+        <a class="btn btn-primary btn-newer-posts disabled" href="#">
           <div>
             Newer Posts <span aria-hidden="true">&rarr;</span>
           </div>

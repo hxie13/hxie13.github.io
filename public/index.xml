@@ -7,7 +7,19 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>&amp;copy; BSD license</copyright>
-    <lastBuildDate>Thu, 17 Mar 2022 22:00:22 +0800</lastBuildDate><atom:link href="https://hxie13.github.io/public/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 27 Mar 2022 19:44:07 +0800</lastBuildDate><atom:link href="https://hxie13.github.io/public/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Linux高性能服务器编程</title>
+      <link>https://hxie13.github.io/public/posts/linux%E9%AB%98%E6%80%A7%E8%83%BD%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%BC%96%E7%A8%8B/</link>
+      <pubDate>Sun, 27 Mar 2022 19:44:07 +0800</pubDate>
+      
+      <guid>https://hxie13.github.io/public/posts/linux%E9%AB%98%E6%80%A7%E8%83%BD%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%BC%96%E7%A8%8B/</guid>
+      <description>1.5 ARP协议工作原理 ARP协议能实现任意网络层地址到任意物理地址的转换，典型的是IP地址与以太网地址(MAC地址)的转换.
+以太网ARP请求/应答报文格式：
+  硬件类型 协议类型 硬件地址长度 协议地址长度 操作 发送端以太网地址 发送端IP地址 目的端以太网地址 目的端IP地址    硬件类型( 2 字节)，1 表示MAC地址. 协议类型( 2 字节)，0x800 表示IP地址. 硬件地址长度( 1 字节)，MAC地址长度为 6 字节. 协议地址长度( 1 字节)，IP(v4)地址长度为 4 字节. 操作( 2 字节)，分四种操作类型，ARP请求(值为 1 )，ARP应答(值为 2 )，RARP请求(值为 3 )，RARP应答(值为 4 ). 后四个字段，每个占 4 字节，分别表示发送端以太网地址，发送端 IP 地址，目的端以太网地址，目的端 IP 地址.  Note. 1 ARP 请求/应答报文长度为 28 字节，以太网帧头部和尾部 18 字节，故一个携带 ARP 请求/应答的以太网帧共 46 字节.
+ Note. 2 但有些网络实现要求以太网帧数据部分长度至少为 46 字节，此时 ARP 请求/应答报文将填充一些字节以满足要求，使得最后的以太网帧长度为 64 字节.</description>
+    </item>
+    
     <item>
       <title>Tfc</title>
       <link>https://hxie13.github.io/public/posts/tfc/</link>
