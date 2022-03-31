@@ -138,6 +138,131 @@
 <h4 id="note-2">Note. 2</h4>
 <p>但有些网络实现要求以太网帧数据部分长度至少为 46 字节，此时 ARP 请求/应答报文将填充一些字节以满足要求，使得最后的以太网帧长度为 64 字节.</p>
 <hr>
+<h2 id="第6章-高级io函数">第6章 高级I/O函数</h2>
+<h3 id="61-pipe函数">6.1 pipe函数</h3>
+<p><code>pipe</code>函数可创建管道，以实现进程间通信.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;unistd.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">pipe</span>(<span style="color:#66d9ef">int</span> fd[<span style="color:#ae81ff">2</span>]);
+<span style="color:#75715e">/*
+</span><span style="color:#75715e">  input : 包含两个int型整数的数组指针
+</span><span style="color:#75715e">  output: 成功返回0，并将一对打开的文件描述符值填入数组内；
+</span><span style="color:#75715e">          失败返回-1，并设置errno.
+</span><span style="color:#75715e">*/</span>
+</code></pre></div><ul>
+<li><code>pipe</code>函数创建的两个文件描述符构成管道的两端，往<code>fd[1</code>写入数据，可以从<code>fd[0]</code>读出.默认这一对文件描述符都是阻塞的.</li>
+<li>管道本身拥有一个容量限制，传输字节流数据，默认大小为65536字节，可以使用&rsquo;fcntl&rsquo;函数来修改管道容量.</li>
+</ul>
+<p><code>socketpair</code>函数可创建双工管道，创建的文件描述符对既可读亦可写.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;sys/types.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;sys/socket.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">socketpair</span>(<span style="color:#66d9ef">int</span> domain, <span style="color:#66d9ef">int</span> type, <span style="color:#66d9ef">int</span> protocol, <span style="color:#66d9ef">int</span> fd[<span style="color:#ae81ff">2</span>]);
+<span style="color:#75715e">// domain只能采用AF_UNIX,因为我们仅能在本地使用双向管道.
+</span></code></pre></div><h2 id="第10章-信号">第10章 信号</h2>
+<p>信号是用户、系统或者进程发送给目标进程的信息，以通知目标进程某个状态的改变或系统异常.</p>
+<h3 id="发送信号">发送信号</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;sys/types.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;signal.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">kill</span>(pid_t pid, <span style="color:#66d9ef">int</span> sig);
+<span style="color:#75715e">/*
+</span><span style="color:#75715e">  pid &gt; 0 : 发送给PID为pid的进程
+</span><span style="color:#75715e">  pid = 0 : 发送给本进程组内的其它进程
+</span><span style="color:#75715e">  pid = -1: 发送给除init进程外的所有进程，但发送者需要拥有对目标进程发送信号的权限
+</span><span style="color:#75715e">  pid &lt; -1: 发送给组ID为-pid的进程组的所有成员
+</span><span style="color:#75715e">*/</span>
+</code></pre></div><h2 id="第13章-多进程编程">第13章 多进程编程</h2>
+<p>内容概括：</p>
+<ul>
+<li><code>fork</code>系统调用：复制进程映像.</li>
+<li><code>exec</code>系列系统调用：替换进程.</li>
+<li>僵尸进程及其避免手段.</li>
+<li>进程间通信(IPC)最简单的方式：管道.</li>
+<li>信号量，消息队列和共享内存.</li>
+<li>进程间传递文件描述符的通用方法.</li>
+</ul>
+<h3 id="131-fork系统调用">13.1 <code>fork</code>系统调用</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;sys/types.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;unistd.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span>pid_t <span style="color:#a6e22e">fork</span>(<span style="color:#66d9ef">void</span>);
+<span style="color:#75715e">// 返回两次，在父进程中返回子进程的PID，在子进程中返回0.
+</span><span style="color:#75715e">// 失败返回-1,并设置errno.
+</span></code></pre></div><ul>
+<li>
+<p><code>fork</code>函数复制当前进程，在内核进程表中创建新的进程表项，新的进程表项，堆指针、栈指针和标志寄存器的值与父进程一致，但子进程的PPID被设置为父进程的PID，信号位图被清除，即父进程设置的信号处理函数不再对新进程起作用.</p>
+</li>
+<li>
+<p>子进程复制父进程的数据，采取的是写时复制，只有在任一进程对数据执行了写操作时，复制才发生.</p>
+</li>
+</ul>
+<h3 id="132-exec系列系统调用">13.2 <code>exec</code>系列系统调用</h3>
+<p><code>exec</code>函数实现在子进程中执行其它程序的功能，即实现进程映像替换的功能,其不会关闭原程序打开的文件描述符，除非该文件描述符被设置类似<code>SOCK_CLOEXEC</code>的属性.</p>
+<h3 id="133-处理僵尸进程">13.3 处理僵尸进程</h3>
+<p>多进程程序，父进程需要跟踪子进程的退出状态，当子进程结束运行时，内核不会立即释放进程的进程表项，以防后续父进程对子进程退出信息的查询。</p>
+<ul>
+<li>由此，在子进程执行结束之后，父进程读取其退出状态之前，我们称该子进程为僵尸进程.</li>
+<li>父进程结束或异常终止，子进程还在运行，此时子进程的PPID被操作系统设置为1，即<code>init</code>进程.在父进程退出之后，在子进程退出之前，该子进程处于僵尸态.</li>
+</ul>
+<p>父进程中运行下列函数以等待子进程结束，避免僵尸进程的产生或使子进程的僵尸态立即结束.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;sys/types.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;sys/wait.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span>pid_t <span style="color:#a6e22e">wait</span>(<span style="color:#66d9ef">int</span><span style="color:#f92672">*</span> stat_loc);
+pid_t <span style="color:#a6e22e">waitpid</span>(pid_t pid, <span style="color:#66d9ef">int</span><span style="color:#f92672">*</span> stat_loc, <span style="color:#66d9ef">int</span> options);
+</code></pre></div><ul>
+<li>
+<p><code>wait</code>函数将阻塞进程，直到父进程的某个子进程结束运行为止.返回结束运行进程的PID，并将退出状态信息存储在stat_loc指向的内存中.</p>
+</li>
+<li>
+<p><code>waitpid</code>函数只等待指定的子进程退出，若pid为-1，<code>waitpid</code>与<code>wait</code>函数相同.</p>
+</li>
+<li>
+<p><code>options</code>取值为<code>WNOHANG</code>时，函数调用非阻塞.</p>
+</li>
+<li>
+<p>在事件发生情况下执行非阻塞调用才能提高程序效率，利用子进程运行结束后发送<code>SIGCHLD</code>信号通知父进程的逻辑，在父进程捕获<code>SIGCHLD</code>信号，并在信号处理函数中调用waitpid函数结束子进程.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">handle_child</span>(<span style="color:#66d9ef">int</span> sig){
+  pid_t pid;
+  <span style="color:#66d9ef">int</span> stat;
+  <span style="color:#66d9ef">while</span>((pid<span style="color:#f92672">=</span>waitpid(<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>, <span style="color:#f92672">&amp;</span>stat, WNOHANG)) <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">0</span>){
+    <span style="color:#75715e">/*对结束子进程进行善后处理*/</span>
+  }
+}
+</code></pre></div></li>
+</ul>
+<h2 id="第15章-进程池和线程池">第15章 进程池和线程池</h2>
+<p>动态创建子进程(或子线程)实现并发服务器有如下缺点：</p>
+<ul>
+<li>动态创建比较耗时，导致较慢的客户响应.</li>
+<li>动态创建的子进程(或子线程)通常服务于一个客户端，为响应海量客户端请求，可能产生大量细微进程(或线程)，它们之间的切换将耗费大量CPU时间.</li>
+<li>动态创建的子进程是当前进程的完整映像，当前进程需要谨慎地管理可分配的文件描述符和堆内存等系统资源，否则子进程可能复制这些资源，从而使得系统可用资源急剧下降，影响服务器性能.</li>
+</ul>
+<h3 id="151-进程池和线程池概述">15.1 进程池和线程池概述</h3>
+<p>进程(线程)池是由服务器预先创建的一组子进程(线程)，注意，线程池中线程的数量应该和CPU数量差不多.</p>
+<ul>
+<li>进程池中所有子进程运行相同代码，具有相同属性(优先级，PGID等).</li>
+<li>新任务到来时，主进程选择进程池中的某个子进程来为之服务：
+<ul>
+<li>主进程通过随机算法和轮流选取算法(Round Robin)来主动选择子进程.</li>
+<li>主进程和所有子进程通过一个共享的工作队列来同步，子进程睡眠在该工作队列上，当新任务到来时，主进程将任务添加到工作队列中，唤醒正在等待任务的子进程，进程池中一个子进程获得任务的接管权，从工作队列中取出任务并执行.</li>
+</ul>
+</li>
+</ul>
+<h3 id="152-处理多客户">15.2 处理多客户</h3>
+<p>并发模式(第8章)</p>
+<ul>
+<li>半同步/半反应堆模式.</li>
+<li>半同步/半异步模式.</li>
+<li>领导者/追随者模式.</li>
+</ul>
+<p>两种形式：</p>
+<ul>
+<li>主进程统一管理监听socket和连接socket，然后将连接socket传递给子进程(对于线程池，父线程将socket传递给子线程是简单的，对于线程池，采取<code>13.9</code>介绍方法传递).</li>
+<li>主进程管理所有监听socket，各个子进程分别管理属于自己的连接socket(父进程通知新的连接到来，子进程自己调用<code>accept</code>来接受新的连接).</li>
+</ul>
+<p>常连接，即一个客户的多次请求可以复用一个TCP连接，设计进程池需要考虑一个问题：一个客户连接上的所有任务是否始终由一个子进程来处理.</p>
+<ul>
+<li>若客户任务是无状态的，可以考虑使用不同子进程来为客户的不同请求服务.</li>
+<li>若客户任务是存在上下文关系的，则最好一直使用同一个进程来为之服务，避免在不同子进程之间传递上下文数据.</li>
+<li>epoll的<code>EPOLLONESHOT</code>事件能确保一个客户连接在整个生命周期中仅被一个线程处理(<code>9.3.4小节</code>).</li>
+</ul>
 
   </section>
   <div class="clearfix">
